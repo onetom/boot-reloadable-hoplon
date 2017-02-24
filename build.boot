@@ -11,7 +11,7 @@
   :dependencies '[[org.clojure/clojure "1.8.0" :scope "compile"]
                   [org.clojure/clojurescript "1.9.227" :scope "compile"]
                   [darongmean/boot-lein-generate "0.1.1" :scope "test"]
-                  [boot/core "2.7.0-rc1" :scope "compile"]
+                  [boot/core "2.7.1" :scope "compile"]
                   [hoplon "6.0.0-alpha16" :scope "compile"]
                   [adzerk/boot-cljs "1.7.228-1" :scope "compile"]
                   [adzerk/boot-reload "0.4.12" :scope "compile"]
