@@ -2,16 +2,26 @@
   (:require
     [javelin.core :as j :refer [cell] :refer-macros [cell= defc defc=]]
     [hoplon.core :as h :refer [defelem when-tpl if-tpl case-tpl for-tpl]]
+    [hoplon.jquery]
     [devtools.core]))
+
+(defn app []
+  (h/h1 "Reloadable page"))
 
 (defonce
   _first_load_
   (do
-    (devtools.core/install! [:custom-formatters :hints :async])))
+    (js/console.log "First load...")
+    (devtools.core/install! [:custom-formatters :hints :async])
+    (h/html
+      (h/head
+        (h/html-meta :charset "utf-8")
+        (h/html-meta :name "viewport"
+                     :content "width=device-width, initial-scale=1"))
+      (h/body (app)))))
 
 (defn reload []
-  (js/console.log "Reload callback was called"))
-
-(h/html
-  (h/body
-    (h/h1 "Reloadable page")))
+  (js/console.log "After reloading...")
+  ; h/body is a singleton DOM element constructor, hence
+  ; multiple calls to it simply replace its children
+  (h/body (app)))
