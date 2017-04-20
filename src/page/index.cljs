@@ -2,8 +2,7 @@
   (:require
     [javelin.core :as j :refer [cell] :refer-macros [cell= defc defc=]]
     [hoplon.core :as h :refer [defelem when-tpl if-tpl case-tpl for-tpl]]
-    [hoplon.jquery]
-    [devtools.core]))
+    [hoplon.jquery]))
 
 (defn app []
   (h/h1 "Reloadable page"))
@@ -12,7 +11,6 @@
   _first_load_
   (do
     (js/console.log "First load...")
-    (devtools.core/install! [:custom-formatters :hints :async])
     (h/html
       (h/head
         (h/html-meta :charset "utf-8")
