@@ -4,8 +4,12 @@
     [hoplon.core :as h :refer [defelem when-tpl if-tpl case-tpl for-tpl]]
     [hoplon.jquery]))
 
+(defc data [1 "2" :3])
+
 (defn app []
-  (h/h1 "Reloadable page"))
+  (list
+    (h/h1 "Reloadable page")
+    (h/p (cell= (pr-str data)))))
 
 (defonce
   _first_load_

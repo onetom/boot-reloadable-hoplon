@@ -8,11 +8,11 @@
        :license     {"EPL" "http://www.eclipse.org/legal/epl-v10.html"}})
 
 (set-env!
-  :dependencies '[[org.clojure/clojure "1.9.0-alpha15" :scope "compile"]
-                  [org.clojure/clojurescript "1.9.521" :scope "compile"]
+  :dependencies '[[org.clojure/clojure "1.9.0-alpha17" :scope "compile"]
+                  [org.clojure/clojurescript "1.9.671" :scope "compile"]
                   [onetom/boot-lein-generate "0.1.3" :scope "test"]
                   [boot/core "2.7.1" :scope "compile"]
-                  [hoplon "7.0.0-SNAPSHOT" :scope "compile"]
+                  [hoplon "7.0.2" :scope "compile"]
                   [adzerk/boot-cljs "2.0.0" :scope "compile"]
                   [adzerk/boot-reload "0.5.1" :scope "compile"]
                   [tailrecursion/boot-static "0.1.0"]
@@ -21,8 +21,14 @@
                   ; As per https://github.com/binaryage/dirac/releases/tag/v1.2.4
                   ; Dirac 1.2.4 needs tools.nrepl 0.2.13
                   [org.clojure/tools.nrepl "0.2.13"]
-                  [binaryage/dirac "1.2.4" :scope "test"]
+                  [binaryage/dirac "1.2.14" :scope "test"]
                   [powerlaces/boot-cljs-devtools "0.2.0" :scope "test"]
+
+                  [adzerk/boot-cljs-repl "0.3.3"]           ;; latest release
+                  [com.cemerick/piggieback "0.2.1" :scope "test"]
+                  [weasel "0.7.0" :scope "test"]
+                  [org.clojure/tools.nrepl "0.2.12" :scope "test"]
+
                   [philoskim/debux "0.2.1" :scope "compile"]]
 
   :source-paths #{"src"})
@@ -35,7 +41,8 @@
   '[hoplon.boot-hoplon :refer [hoplon prerender]]
   '[adzerk.boot-cljs :refer [cljs]]
   '[tailrecursion.boot-static :refer [serve]]
-  '[powerlaces.boot-cljs-devtools :refer [cljs-devtools dirac]])
+  '[powerlaces.boot-cljs-devtools :refer [cljs-devtools dirac]]
+  '[adzerk.boot-cljs-repl :refer [cljs-repl start-repl]])
 
 (def devtools-config
   {:features-to-install           [:formatters :hints :async]
@@ -59,9 +66,11 @@
                                                :dirac.runtime/config dirac-config}}})
   (comp
     (watch)
+    (notify :audible true)
     (hoplon)
     (reload :on-jsload 'page.index/reload)
+    (cljs-repl :nrepl-opts {:port 9009})
     (cljs-devtools)
-    (dirac)
+    ;(dirac)
     (cljs)
     (serve :port 8000)))
